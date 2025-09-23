@@ -1,0 +1,414 @@
+<template>
+    <div class="quote-app">
+        
+        <!-- Success/Error Status Banner -->
+        <template lwc:if={isAccepted}>
+            <div class="status-banner success-banner">
+                <div class="status-content">
+                    <div class="status-icon-wrapper">
+                        <lightning-icon icon-name="utility:success" variant="inverse" size="large"></lightning-icon>
+                    </div>
+                    <div class="status-text">
+                        <h2 class="status-title">Thank You!</h2>
+                        <p class="status-message">You have <strong>{quoteStatus}</strong> this quote.</p>
+                        <template lwc:if={poNumber}>
+                            <div class="po-info">
+                                <template lwc:if={isTemplate1}>
+                                    PO Number: <strong>{poNumber}</strong>
+                                </template>
+                                <template lwc:if={isTemplate2}>
+                                    Work Order Number: <strong>{poNumber}</strong>
+                                </template>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <template lwc:if={isDenied}>
+            <div class="status-banner error-banner">
+                <div class="status-content">
+                    <div class="status-icon-wrapper">
+                        <lightning-icon icon-name="utility:error" variant="inverse" size="large"></lightning-icon>
+                    </div>
+                    <div class="status-text">
+                        <h2 class="status-title">Quote Declined</h2>
+                        <p class="status-message">You have <strong>declined</strong> this quote. If you changed your mind, please contact us.</p>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <!-- Action Buttons -->
+        <template lwc:if={showAcceptAndDeniedButton}>
+            <div class="action-section">
+                <div class="action-buttons">
+                    <lightning-button 
+                        variant="brand" 
+                        label="Accept Quote" 
+                        title="Accept Quote" 
+                        onclick={handleAcceptClick}
+                        class="btn-accept">
+                    </lightning-button>
+                    <lightning-button 
+                        variant="destructive" 
+                        label="Decline Quote" 
+                        title="Decline Quote" 
+                        onclick={handleDecline}
+                        class="btn-decline">
+                    </lightning-button>
+                </div>
+            </div>
+        </template>
+
+        <!-- Quote Content Cards -->
+        <div class="quote-content">
+            
+            <!-- Header Card -->
+            <div class="quote-card header-card">
+                <div class="card-header">
+                    <div class="company-branding">
+                        <img class="company-logo" 
+                             src="https://computing-power-5305--partial.sandbox.file.force.com/sfc/dist/version/download/?oid=00DD30000008r1o&ids=068D3000006FhXh&d=%2Fa%2FD30000005ONH%2FeFy8AFZWEhv5z26z9sJcPKJj3UHJCLFiV_rSyV3FMz0&asPdf=false" 
+                             alt="CalEnergy Corporation">
+                    </div>
+                    <div class="quote-meta">
+                        <h1 class="quote-title">Service Quote</h1>
+                        <div class="meta-info">
+                            <div class="meta-item">
+                                <span class="meta-label">Quote #:</span>
+                                <span class="meta-value">{quote.QuoteNumber}</span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-label">Date:</span>
+                                <span class="meta-value">
+                                    <template lwc:if={isTemplate1}>01/09/2025</template>
+                                    <template lwc:if={isTemplate2}>02/14/2025</template>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Client & Project Info Card -->
+            <div class="quote-card info-card">
+                <div class="card-body">
+                    <div class="info-grid">
+                        <!-- Client Information -->
+                        <div class="info-section">
+                            <h3 class="section-title">
+                                <lightning-icon icon-name="utility:people" size="small" class="title-icon"></lightning-icon>
+                                Client Information
+                            </h3>
+                            <div class="info-content">
+                                <div class="client-name">
+                                    <template lwc:if={isTemplate1}>{quote.Contact.FirstName}</template>
+                                    <template lwc:if={isTemplate2}>Armando Uribe</template>
+                                </div>
+                                <div class="company-name">
+                                    <template lwc:if={isTemplate1}>{quote.Account.Name}</template>
+                                    <template lwc:if={isTemplate2}>PLP SoCal</template>
+                                </div>
+                                <div class="contact-details">
+                                    <template lwc:if={isTemplate1}>
+                                        <div class="contact-item">
+                                            <lightning-icon icon-name="utility:email" size="x-small"></lightning-icon>
+                                            {quote.Email}
+                                        </div>
+                                        <div class="contact-item">
+                                            <lightning-icon icon-name="utility:location" size="x-small"></lightning-icon>
+                                            {quote.ShippingStreet}, {quote.ShippingCity}, {quote.ShippingState} {quote.ShippingPostalCode}
+                                        </div>
+                                        <div class="contact-item">
+                                            <lightning-icon icon-name="utility:phone_portrait" size="x-small"></lightning-icon>
+                                            {quote.Phone}
+                                        </div>
+                                    </template>
+                                    <template lwc:if={isTemplate2}>
+                                        <div class="contact-item">
+                                            <lightning-icon icon-name="utility:email" size="x-small"></lightning-icon>
+                                            auribe@plpsocal.com
+                                        </div>
+                                        <div class="contact-item">
+                                            <lightning-icon icon-name="utility:location" size="x-small"></lightning-icon>
+                                            1737 East 22nd Street, Los Angeles, CA. 90058
+                                        </div>
+                                        <div class="contact-item">
+                                            <lightning-icon icon-name="utility:phone_portrait" size="x-small"></lightning-icon>
+                                            (323) 620-8797
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Project Information -->
+                        <div class="info-section">
+                            <h3 class="section-title">
+                                <lightning-icon icon-name="utility:work_order_type" size="small" class="title-icon"></lightning-icon>
+                                Project Details
+                            </h3>
+                            <div class="info-content">
+                                <div class="project-item">
+                                    <span class="item-label">Project:</span>
+                                    <span class="item-value">
+                                        <template lwc:if={isTemplate1}>{quote.Opportunity.Name}</template>
+                                        <template lwc:if={isTemplate2}>Congregate Care Facility Elderly</template>
+                                    </span>
+                                </div>
+                                <div class="project-item">
+                                    <span class="item-label">Service:</span>
+                                    <span class="item-value">CLCATT - Lighting Controls Title 24 Acceptance Testing</span>
+                                </div>
+                                <div class="project-item">
+                                    <span class="item-label">Representative:</span>
+                                    <span class="item-value">
+                                        <template lwc:if={isTemplate1}>{quote.Opportunity.Owner.Name}</template>
+                                        <template lwc:if={isTemplate2}>Collin Weiner</template>
+                                    </span>
+                                </div>
+                                <div class="project-item">
+                                    <span class="item-label">Location:</span>
+                                    <span class="item-value">
+                                        <template lwc:if={isTemplate1}>San Francisco, California</template>
+                                        <template lwc:if={isTemplate2}>Irvine, California</template>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Description Card -->
+            <div class="quote-card description-card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <lightning-icon icon-name="utility:description" size="small" class="title-icon"></lightning-icon>
+                        Scope of Work
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <div class="description-content">
+                        <template lwc:if={isTemplate1}>
+                            <p>{quote.Description}</p>
+                        </template>
+                        <template lwc:if={isTemplate2}>
+                            <p>We are pleased to provide our proposal to perform Lighting Controls Title 24 acceptance testing and certification at Chase Center - WNBA Golden State Valkyries Locker Room. Documentation and compliance verification forms per CEC regulations shall be completed and sent to your attention within five business days of testing. If required sooner, please let us know and we will provide a re-quote for expedited service.</p>
+                        </template>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pricing Card -->
+            <div class="quote-card pricing-card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <lightning-icon icon-name="utility:money" size="small" class="title-icon"></lightning-icon>
+                        Pricing Details
+                    </h3>
+                </div>
+                <div class="card-body">
+                    
+                    <!-- Dynamic Quote Lines (Template 1) -->
+                    <template lwc:if={isTemplate1}>
+                        <div class="pricing-table">
+                            <div class="table-header">
+                                <div class="col-description">Description</div>
+                                <div class="col-qty">Qty</div>
+                                <div class="col-rate">Rate</div>
+                                <div class="col-total">Total</div>
+                            </div>
+                            <template for:each={quoteLines} for:item="qli">
+                                <div key={qli.Id} class="table-row">
+                                    <div class="col-description">
+                                        <div class="service-name">{qli.Product2.Name}</div>
+                                        <div class="service-desc">{qli.Description}</div>
+                                    </div>
+                                    <div class="col-qty">{qli.Quantity}</div>
+                                    <div class="col-rate">${qli.UnitPrice}</div>
+                                    <div class="col-total">${qli.TotalPrice}</div>
+                                </div>
+                            </template>
+                        </div>
+                    </template>
+
+                    <!-- Static Quote Lines (Template 2) -->
+                    <template lwc:if={isTemplate2}>
+                        <div class="pricing-table">
+                            <div class="table-header">
+                                <div class="col-description">Description</div>
+                                <div class="col-qty">Qty</div>
+                                <div class="col-rate">Rate</div>
+                                <div class="col-total">Total</div>
+                            </div>
+                            <div class="table-row">
+                                <div class="col-description">
+                                    <div class="service-name">Lighting Controls Title 24 Acceptance Testing</div>
+                                    <div class="service-desc">Compliance Form / Plan Review - Construction Inspection - Function Testing / Verification - Provide / Submit Acceptance Certificates. Includes: Applicable NRCI & NRCA Forms (Project Specific)</div>
+                                </div>
+                                <div class="col-qty">5.00</div>
+                                <div class="col-rate">$1,600.00</div>
+                                <div class="col-total">$8,000.00</div>
+                            </div>
+                        </div>
+                    </template>
+
+                    <!-- Total Section -->
+                    <div class="pricing-summary">
+                        <div class="summary-row">
+                            <div class="summary-label">Total Amount</div>
+                            <div class="summary-value">
+                                <template lwc:if={isTemplate1}>${quote.TotalPrice}</template>
+                                <template lwc:if={isTemplate2}>$8,000.00</template>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Terms & Conditions Card -->
+            <div class="quote-card terms-card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <lightning-icon icon-name="utility:contract" size="small" class="title-icon"></lightning-icon>
+                        Terms & Conditions
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <div class="terms-list">
+                        <div class="term-item">
+                            <div class="term-number">1</div>
+                            <div class="term-text">Overtime labor is excluded. We assume all work can be performed during normal business hours, between 7am and 4pm Monday through Friday.</div>
+                        </div>
+                        <div class="term-item">
+                            <div class="term-number">2</div>
+                            <div class="term-text">We exclude any modifications, improvements, repairs, adjustments, or alterations of any kind to existing building or new lighting/control systems.</div>
+                        </div>
+                        <div class="term-item">
+                            <div class="term-number">3</div>
+                            <div class="term-text">We assume we will have free access to all areas and equipment during our scheduled on-site work and any equipment necessary to access said spaces where equipment is installed.</div>
+                        </div>
+                        <div class="term-item">
+                            <div class="term-number">4</div>
+                            <div class="term-text">All lighting and lighting controls must be installed, energized and functional upon arrival.</div>
+                        </div>
+                        <div class="term-item">
+                            <div class="term-number">5</div>
+                            <div class="term-text">Cancellations for service must be requested via email no later than 48 hours prior to the start of service. Failure to notify CalEnergy will result in a $900 cancellation fee.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="payment-terms">
+                        <p>We require purchase orders, or consulting agreements for all work, not sub-contracts. Payment terms are immediate upon receiving the invoice from CalEnergy Corporation's office.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Information Card -->
+            <div class="quote-card contact-card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <lightning-icon icon-name="utility:contact" size="small" class="title-icon"></lightning-icon>
+                        Contact Information
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <div class="contact-info">
+                        <div class="contact-person">
+                            <h4 class="person-name">Collin Weiner</h4>
+                            <p class="person-title">President/CEO</p>
+                            <div class="contact-methods">
+                                <div class="contact-method">
+                                    <lightning-icon icon-name="utility:email" size="x-small"></lightning-icon>
+                                    <span>collinw@calenergycorp.com</span>
+                                </div>
+                                <div class="contact-method">
+                                    <lightning-icon icon-name="utility:phone_portrait" size="x-small"></lightning-icon>
+                                    <span>925-922-2606</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="thank-you-message">
+                            <p>Thank you for this opportunity to be of service. Please contact me with any questions or concerns.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Bottom Action Buttons -->
+        <template lwc:if={showAcceptAndDeniedButton}>
+            <div class="action-section bottom-actions">
+                <div class="action-buttons">
+                    <lightning-button 
+                        variant="brand" 
+                        label="Accept Quote" 
+                        title="Accept Quote" 
+                        onclick={handleAcceptClick}
+                        class="btn-accept">
+                    </lightning-button>
+                    <lightning-button 
+                        variant="destructive" 
+                        label="Decline Quote" 
+                        title="Decline Quote" 
+                        onclick={handleDecline}
+                        class="btn-decline">
+                    </lightning-button>
+                </div>
+            </div>
+        </template>
+
+    </div>
+
+    <!-- PO Number Modal -->
+    <template if:true={isModalOpen}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading" aria-modal="true" class="slds-modal slds-fade-in-open modern-modal">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header modal-header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse" size="small"></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading" class="slds-text-heading_medium modal-title">
+                        <lightning-icon icon-name="utility:work_order" size="small" class="modal-icon"></lightning-icon>
+                        <template lwc:if={isTemplate1}>Enter PO Information</template>
+                        <template lwc:if={isTemplate2}>Enter Work Order Information</template>
+                    </h2>
+                </header>
+                <div class="slds-modal__content modal-content">
+                    <div class="modal-description">
+                        <p>Please provide your Purchase Order number to complete the quote acceptance.</p>
+                    </div>
+                    <lightning-input
+                        label="PO Number (Optional)"
+                        type="text"
+                        name="poNumber"
+                        value={poNumber}
+                        onchange={handlePONumberChange}
+                        class="modal-input">
+                    </lightning-input>
+                </div>
+                <footer class="slds-modal__footer modal-footer">
+                    <lightning-button 
+                        label="Cancel" 
+                        variant="neutral" 
+                        onclick={closeModal}
+                        class="btn-modal-cancel">
+                    </lightning-button>
+                    <lightning-button 
+                        label="Accept Quote" 
+                        variant="brand" 
+                        onclick={submitWorkOrder} 
+                        class="btn-modal-accept">
+                    </lightning-button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+</template>

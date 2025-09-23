@@ -1,0 +1,57 @@
+<apex:page StandardController="Quote" extensions="InoviQuoteController" standardStylesheets="true" showHeader="false" lightningStylesheets="true">
+
+    <apex:includeLightning />
+    <div id="LwcId" />
+
+    <script>
+        var id = "{!quoteId}";
+        console.log('hello workld');
+        console.log('hello workld'+ id);
+        document.addEventListener("redirect", function(event){
+            console.log('event.detail.action:', event.detail.action);
+                //console.log('vf event data window listener => ', event.detail.email);
+                if(event.detail.showToast){
+                    let toastParams = {
+                            "type": "success",
+                            "title": "Success!",
+                            "message": "Quote saved successfully."
+                    }
+    
+                    sforce.one.showToast(toastParams);
+                }
+    
+                if(event.detail.action == 'opp_related_list'){
+                    sforce.one.navigateToRelatedList('Opportunities', id);
+                }
+                console.log('vf event data window listener => ');
+            });
+            console.log('id:'+ id);
+            $Lightning.use("c:QuoteApp", function() {
+            $Lightning.createComponent("c:inoviQuoteDetail",
+            {
+                recordId : id
+            },
+            "LwcId", // the Id of div tag where your component will be rendered
+            function(cmp) {
+                console.log('Calling the LWC Component');
+            });
+        });
+    </script>
+
+    <!--<apex:form >
+        <apex:pageBlock title="Add Quote Line">
+            <apex:inputField value="{!newQuoteLine.Product2Id}" />
+            <apex:inputField value="{!newQuoteLine.Quantity}" />
+            <apex:inputField value="{!newQuoteLine.UnitPrice}" />
+            <apex:commandButton action="{!addQuoteLine}" value="Add Line Item" rerender="qlItems"/>
+        </apex:pageBlock>
+
+        <apex:pageBlock title="Quote Line Items" id="qlItems">
+            <apex:pageBlockTable value="{!quoteLineItems}" var="qli">
+                <apex:column value="{!qli.Product2.Name}" />
+                <apex:column value="{!qli.Quantity}" />
+                <apex:column value="{!qli.UnitPrice}" />
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+    </apex:form>-->
+</apex:page>
