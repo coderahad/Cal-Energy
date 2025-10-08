@@ -1,0 +1,489 @@
+<!-- QuotePdf.page -->
+<apex:page controller="QuotePdfController" renderAs="pdf" applyHtmlTag="false" showHeader="false" standardStylesheets="false">
+    <html>
+      <head>
+        <style>
+          /* add your PDF CSS here */
+          img.company-logo{
+            width: 300px;
+            margin:0 auto;
+            display: block;
+          }
+          img.company-logo-2{
+            width: 300px;
+          }
+          .first-page{
+            font-family: Arial, Helvetica, sans-serif;
+            font-size:14px;
+          }
+
+          .second-page{
+            font-family: Arial, Helvetica, sans-serif;
+            font-size:11px;
+          }
+        </style>
+      </head>
+      <body>
+        <img class="company-logo" 
+                             src="https://computing-power-5305--partial.sandbox.file.force.com/sfc/dist/version/download/?oid=00DD30000008r1o&ids=068D3000006FhXh&d=%2Fa%2FD30000005ONH%2FeFy8AFZWEhv5z26z9sJcPKJj3UHJCLFiV_rSyV3FMz0&asPdf=false" 
+                             alt="CalEnergy Corporation" /><br/>
+        <div class="first-page">
+          
+        <apex:outputPanel rendered="{!templateName='CLCATT T24 Only'}">
+          <apex:outputText value="{0, date, MMMM d', ' yyyy}">
+              <apex:param value="{!quote.CreatedDate}" />
+          </apex:outputText>
+          <div>Quote Number : <apex:outputField value="{!quote.QuoteNumber}"/></div>
+          <div><apex:outputField value="{!quote.Contact.Name}"/></div>
+          <div><apex:outputField value="{!quote.Account.Name}"/></div>
+          <div>Re: {!SL}</div>
+          <p>
+            <span><apex:outputField value="{!quote.Contact.Name}"/>:</span><br/>
+            We are pleased to provide our proposal to perform Lighting Controls Title 24 acceptance testing and certification at {!SL}. Documentation and compliance verification forms per CEC regulations shall be completed and sent to your attention within five business days of testing. If required sooner, please let us know and we will provide a re-quote for expedited service.  
+            <br/> <br/><b>PRICING:</b><br/><br/>
+            We offer the scope of work described for a fixed sum of :  <apex:outputField value="{!quote.TotalPrice}"/><br/>
+             <br/><b>QUALIFICATIONS:</b><br/><br/>
+            1. Overtime labor is excluded. We assume all work can be performed during normal business
+hours, between 7am and 4pm Monday through Friday.<br/><br/>
+
+2. We exclude any modifications, improvements, repairs, adjustments, or alterations of any kind
+to existing building or new lighting/control systems.<br/><br/>
+
+3. We assume we will have free access to all areas and equipment during our scheduled on-site
+work and any equipment necessary to access said spaces where equipment is installed.<br/><br/>
+
+4. All lighting and lighting controls must be installed, energized and functional upon arrival.<br/><br/>
+
+5. Cancellations for service must be requested via email no later than 48 hours prior to the start of service. Failure to notify CalEnergy will result in a $900 cancellation fee.<br/><br/>
+
+
+We require purchase orders, or consulting agreements for all work, not sub-contracts. Payment terms are immediate upon receiving the invoice from CalEnergy Corporations office. Pay Now.<br/><br/>
+
+Thank you for this opportunity to be of service. Please contact me with any questions or concerns.<br/><br/>
+
+Sincerely,.<br/><br/>
+
+Collin Weiner | President/CEO| collinw@calenergycorp.com| 925-922-2606
+          </p>
+        </apex:outputPanel>
+
+
+
+        <apex:outputPanel rendered="{!templateName='Programming Only'}">
+          <apex:outputText value="{0, date, MMMM d', ' yyyy}">
+              <apex:param value="{!quote.CreatedDate}" />
+          </apex:outputText>
+          <div>Quote Number : <apex:outputField value="{!quote.QuoteNumber}"/></div>
+          <div><apex:outputField value="{!quote.Contact.Name}"/></div>
+          <div><apex:outputField value="{!quote.Account.Name}"/></div>
+          <div>Project: {!SL}</div>
+          <p>
+            <span><apex:outputField value="{!quote.Contact.Name}"/>:</span><br/>
+            We are pleased to provide our proposal for the above referenced location.  
+            <br/> <br/><b>PRICING:</b><br/><br/>
+            We offer the scope of work described for a fixed sum of  :  <apex:outputField value="{!quote.TotalPrice}"/><br/>
+            <br/>
+            Payment terms are immediate upon receiving invoice from CalEnergy Corporations office.  
+            <br/><br/><b>QUALIFICATIONS:</b><br/><br/>
+            1. Overtime labor is excluded. We assume all work can be performed during normal business
+hours, between 7am and 4pm Monday through Friday.<br/><br/>
+
+2. We exclude any modifications, improvements, repairs, adjustments, or alterations of any kind
+to existing building or new lighting/control systems.<br/><br/>
+
+3. We assume we will have free access to all areas and equipment during our scheduled on-site
+work and any equipment necessary to access said spaces where equipment is installed.<br/><br/>
+
+4. All lighting and lighting controls must be installed, energized and functional upon arrival.<br/><br/>
+
+5. CalEnergy takes no responsibility for system design functionality or firmware issues deemed manufacturer related.<br/><br/>
+
+6. Cancellations for service must be requested via email no later than 48 hours prior to the start of service. Failure to notify CalEnergy will result in a $900 cancellation fee.<br/><br/>
+
+
+Thank you for this opportunity to be of service. Please contact me with any questions or concerns.<br/><br/>
+
+Sincerely,.<br/><br/>
+
+Collin Weiner | President/CEO| collinw@calenergycorp.com| 925-922-2606
+          </p>
+        </apex:outputPanel>
+
+
+
+        <apex:outputPanel rendered="{!templateName='T24 (Prevailing Wage)'}">
+          <apex:outputText value="{0, date, MMMM d', ' yyyy}">
+              <apex:param value="{!quote.CreatedDate}" />
+          </apex:outputText>
+          <div>Quote Number : <apex:outputField value="{!quote.QuoteNumber}"/></div>
+          <div><apex:outputField value="{!quote.Contact.Name}"/></div>
+          <div><apex:outputField value="{!quote.Account.Name}"/></div>
+          <div>Re: {!SL}</div>
+          <p>
+            <span><apex:outputField value="{!quote.Contact.Name}"/>:</span><br/>
+            We are pleased to provide our proposal to perform Lighting Controls Title 24 acceptance testing and certification at the above referenced location. Documentation and compliance verification forms per CEC regulations shall be completed and sent to your attention within three business days of testing. If required sooner, please let us know and we will provide a re-quote.   
+            <br/> <br/><b>PRICING:</b><br/><br/>
+            We offer the scope of work described for a fixed sum of  :  <apex:outputField value="{!quote.TotalPrice}"/><br/>
+            <br/>
+            Payment terms are immediate upon receiving invoice from CalEnergy Corporations office.  
+            <br/><br/><b>QUALIFICATIONS:</b><br/><br/>
+            1. Overtime labor is excluded. We assume all work can be performed during normal business
+hours, between 7am and 4pm Monday through Friday.<br/><br/>
+
+2. We exclude any modifications, improvements, repairs, adjustments, or alterations of any kind
+to existing building or new lighting/control systems.<br/><br/>
+
+3. We assume we will have free access to all areas and equipment during our scheduled on-site
+work and any equipment necessary to access said spaces where equipment is installed.<br/><br/>
+
+4. All lighting and lighting controls must be installed, energized and functional upon arrival.<br/><br/>
+
+5. Cancellations for service must be requested via email no later than 48 hours prior to the start of service. Failure to notify CalEnergy will result in a $900 cancellation fee.<br/><br/>
+
+
+
+Payment terms are immediate upon receiving invoice from CalEnergy Corporations office.<br/><br/>
+
+Thank you for this opportunity to be of service. Please contact me with any questions or concerns.<br/><br/>
+
+Sincerely,.<br/><br/>
+
+Collin Weiner | President/CEO| collinw@calenergycorp.com| 925-922-2606
+          </p>
+        </apex:outputPanel>
+
+
+        <apex:outputPanel rendered="{!templateName='T24 Testing (After Hours)'}">
+          <apex:outputText value="{0, date, MMMM d', ' yyyy}">
+              <apex:param value="{!quote.CreatedDate}" />
+          </apex:outputText>
+          <div>Quote Number : <apex:outputField value="{!quote.QuoteNumber}"/></div>
+          <div><apex:outputField value="{!quote.Contact.Name}"/></div>
+          <div><apex:outputField value="{!quote.Account.Name}"/></div>
+          <div>Re: {!SL}</div>
+          <p>
+            <span><apex:outputField value="{!quote.Contact.Name}"/>:</span><br/>
+            We are pleased to provide our proposal to perform Lighting Controls Title 24 acceptance testing and certification at the above referenced location. Documentation and compliance verification forms per CEC regulations shall be completed and sent to your attention within three business days of testing. If required sooner, please let us know and we will provide a re-quote.   
+            <br/> <br/><b>PRICING:</b><br/><br/>
+            We offer the scope of work described for a fixed sum of  :  <apex:outputField value="{!quote.TotalPrice}"/><br/>
+            <br/>
+            Payment terms are immediate upon receiving invoice from CalEnergy Corporations office.  
+            <br/><br/><b>QUALIFICATIONS:</b><br/><br/>
+            1. Overtime labor is excluded. We assume all work can be performed during normal business
+hours, between 7am and 4pm Monday through Friday.<br/><br/>
+
+2. We exclude any modifications, improvements, repairs, adjustments, or alterations of any kind
+to existing building or new lighting/control systems.<br/><br/>
+
+3. We assume we will have free access to all areas and equipment during our scheduled on-site
+work and any equipment necessary to access said spaces where equipment is installed.<br/><br/>
+
+4. All lighting and lighting controls must be installed, energized and functional upon arrival.<br/><br/>
+
+5. Cancellations for service must be requested via email no later than 48 hours prior to the start of service. Failure to notify CalEnergy will result in a $900 cancellation fee.<br/><br/>
+
+Payment terms are immediate upon receiving invoice from CalEnergy Corporations office.<br/><br/>
+
+Thank you for this opportunity to be of service. Please contact me with any questions or concerns.<br/><br/>
+
+Sincerely,.<br/><br/>
+
+Collin Weiner | President/CEO| collinw@calenergycorp.com| 925-922-2606
+          </p>
+        </apex:outputPanel>
+
+
+
+        <apex:outputPanel rendered="{!templateName='Program/Test/Devices Sale'}">
+          <apex:outputText value="{0, date, MMMM d', ' yyyy}">
+              <apex:param value="{!quote.CreatedDate}" />
+          </apex:outputText>
+          <div>Quote Number : <apex:outputField value="{!quote.QuoteNumber}"/></div>
+          <div><apex:outputField value="{!quote.Contact.Name}"/></div>
+          <div><apex:outputField value="{!quote.Account.Name}"/></div>
+          <div>Re: {!SL}</div>
+          <p>
+            <span><apex:outputField value="{!quote.Contact.Name}"/>:</span><br/>
+            We are pleased to provide our proposal to perform Lighting Controls Title 24 acceptance testing and certification at the above referenced location. Documentation and compliance verification forms per CEC regulations shall be completed and sent to your attention within three business days of testing. If required sooner, please let us know and we will provide a re-quote.   
+            <br/> <br/><b>PRICING:</b><br/><br/>
+            We offer the scope of work described for a fixed sum of  :  <apex:outputField value="{!quote.TotalPrice}"/><br/>
+            <br/>
+            Payment terms are immediate upon receiving invoice from CalEnergy Corporations office.  
+            <br/><br/><b>QUALIFICATIONS:</b><br/><br/>
+            1. Overtime labor is excluded. We assume all work can be performed during normal business
+hours, between 7am and 4pm Monday through Friday.<br/><br/>
+
+2. We exclude any modifications, improvements, repairs, adjustments, or alterations of any kind
+to existing building or new lighting/control systems.<br/><br/>
+
+3. We assume we will have free access to all areas and equipment during our scheduled on-site
+work and any equipment necessary to access said spaces where equipment is installed.<br/><br/>
+
+4. All lighting and lighting controls must be installed, energized and functional upon arrival.<br/><br/>
+
+
+5. CalEnergy takes no responsibility for system design functionality or firmware issues deemed manufacturer related.<br/><br/>
+
+6. Cancellations for service must be requested via email no later than 48 hours prior to the start of service. Failure to notify CalEnergy will result in a $900 cancellation fee.<br/><br/>
+
+
+Thank you for this opportunity to be of service. Please contact me with any questions or concerns.<br/><br/>
+
+Sincerely,.<br/><br/>
+
+Collin Weiner | President/CEO| collinw@calenergycorp.com| 925-922-2606
+          </p>
+        </apex:outputPanel>
+
+
+        <apex:outputPanel rendered="{!templateName='Programming/CLCATT'}">
+          <apex:outputText value="{0, date, MMMM d', ' yyyy}">
+              <apex:param value="{!quote.CreatedDate}" />
+          </apex:outputText>
+          <div>Quote Number : <apex:outputField value="{!quote.QuoteNumber}"/></div>
+          <div><apex:outputField value="{!quote.Contact.Name}"/></div>
+          <div><apex:outputField value="{!quote.Account.Name}"/></div>
+          <div>Re: {!SL}</div>
+          <p>
+            <span>Hi <apex:outputField value="{!quote.Contact.Name}"/>:</span><br/>
+            Below is our proposal for {!SL}. Documentation and compliance verification forms per CEC regulations shall be completed and sent to your attention within five business days of testing. If required sooner, please let us know and we will provide a re-quote.  Please review notes below as well.    
+            <br/> <br/><b>PRICING:</b><br/><br/>
+            We offer the scope of work described for a fixed sum of  :  <apex:outputField value="{!quote.TotalPrice}"/><br/>
+            <br/>
+            Payment terms are immediate upon receiving invoice from CalEnergy Corporations office.  
+            <br/><br/><b>QUALIFICATIONS:</b><br/><br/>
+            1. Overtime labor is excluded. We assume all work can be performed during normal business
+hours, between 7am and 4pm Monday through Friday.<br/><br/>
+
+2. We exclude any modifications, improvements, repairs, adjustments, or alterations of any kind
+to existing building or new lighting/control systems.<br/><br/>
+
+3. We assume we will have free access to all areas and equipment during our scheduled on-site
+work and any equipment necessary to access said spaces where equipment is installed.<br/><br/>
+
+4. All lighting and lighting controls must be installed, energized and functional upon arrival.<br/><br/>
+
+
+5. CalEnergy takes no responsibility for system design functionality or firmware issues deemed manufacturer related.<br/><br/>
+
+6. Cancellations for service must be requested via email no later than 48 hours prior to the start of service. Failure to notify CalEnergy will result in a $900 cancellation fee.<br/><br/>
+
+Payment terms are immediate upon receiving invoice from CalEnergy Corporations office.
+<br/><br/>
+
+Thank you for this opportunity to be of service. Please contact me with any questions or concerns.<br/><br/>
+
+Sincerely,.<br/><br/>
+
+Collin Weiner | President/CEO| collinw@calenergycorp.com| 925-922-2606
+          </p>
+        </apex:outputPanel>
+
+
+        <apex:outputPanel rendered="{!templateName='T24 Consultation'}">
+          <apex:outputText value="{0, date, MMMM d', ' yyyy}">
+              <apex:param value="{!quote.CreatedDate}" />
+          </apex:outputText>
+          <div>Quote Number : <apex:outputField value="{!quote.QuoteNumber}"/></div>
+          <div><apex:outputField value="{!quote.Contact.Name}"/></div>
+          <div><apex:outputField value="{!quote.Account.Name}"/></div>
+          <div>Project: {!SL}</div>
+          <p>
+            <span><apex:outputField value="{!quote.Contact.Name}"/>:</span><br/>
+            We are pleased to provide our proposal for the above referenced location. 
+            <br/> <br/><b>PRICING:</b><br/><br/>
+            We offer the scope of work described for a fixed sum of  :  <apex:outputField value="{!quote.TotalPrice}"/><br/>
+            <br/>
+            Payment terms are immediate upon receiving invoice from CalEnergy Corporations office.  
+            <br/><br/><b>QUALIFICATIONS:</b><br/><br/>
+            
+            
+
+1. Title 24 Consultations are billed in four hour blocks. Approved number of hour blocks are included on proposal. .<br/><br/>
+
+2. Any work done outside the approved four hour block schedule must be approved by client..<br/><br/>
+
+3. Any remaining time blocks not used, will not be charged at time of invoice..<br/><br/>
+
+4. It is the clients responsability to provide CalEnergy with the most current and accurate controls drawings..<br/><br/>
+
+
+Thank you for this opportunity to be of service. Please contact me with any questions or concerns.<br/><br/>
+
+Sincerely,.<br/><br/>
+
+Collin Weiner | President/CEO| collinw@calenergycorp.com| 925-922-2606
+          </p>
+        </apex:outputPanel>
+
+
+        <apex:outputPanel rendered="{!templateName='Controls Design / CLCATT'}">
+          <apex:outputText value="{0, date, MMMM d', ' yyyy}">
+              <apex:param value="{!quote.CreatedDate}" />
+          </apex:outputText>
+          <div>Quote Number : <apex:outputField value="{!quote.QuoteNumber}"/></div>
+          <div><apex:outputField value="{!quote.Contact.Name}"/></div>
+          <div><apex:outputField value="{!quote.Account.Name}"/></div>
+          <div>Project: {!SL}</div>
+          <p>
+            <span><apex:outputField value="{!quote.Contact.Name}"/>:</span><br/>
+            We are pleased to provide our proposal for the above referenced location. 
+            <br/> <br/><b>PRICING:</b><br/>
+            We offer the scope of work described for a fixed sum of  :  <apex:outputField value="{!quote.TotalPrice}"/><br/>
+            <br/>
+            Payment terms are immediate upon receiving invoice from CalEnergy Corporations office.  
+            <br/><br/><b>QUALIFICATIONS:</b><br/>
+            
+            
+1. Title 24 Consultations are billed in four hour blocks. Approved number of hour blocks are included on proposal. <br/>
+
+2. Any work done outside the approved four hour block schedule must be approved by client.<br/><br/>
+
+3. Any remaining time blocks not used, will not be charged at time of invoice.<br/><br/>
+
+4. It is the clients responsability to provide CalEnergy with the most current and accurate electrical drawings and specifications.<br/><br/>
+
+5. Overtime labor is excluded. We assume all work can be performed during normal business hours, between 7am and 4pm Monday through Friday.<br/><br/>
+
+6. We exclude any modifications, improvements, repairs, adjustments, or alterations of any kind to existing building or new lighting/control systems.<br/><br/>
+
+7. We assume we will have free access to all areas and equipment during our scheduled on-site work and any equipment necessary to access said spaces where equipment is installed.<br/><br/>
+
+8. All lighting and lighting controls must be installed, energized and functional upon arrival.<br/><br/>
+
+9. Title 24 acceptance testing and certification documentation and compliance verification forms per CEC regulations shall be completed and sent to your attention within five business days of testing. If required sooner, please let us know and we will provide a re-quote for expedited service.  <br/><br/>
+
+10.  Cancellations for service must be requested via email no later than 48 hours prior to the start of service. Failure to notify CalEnergy will result in a $900 cancellation fee.<br/><br/>
+
+We require purchase orders, or consulting agreements for all work, not sub-contracts. Payment terms are immediate upon receiving the invoice from CalEnergy Corporations office. Pay Now.<br/><br/>
+Thank you for this opportunity to be of service. Please contact me with any questions or concerns.<br/><br/>
+
+Sincerely,.<br/><br/>
+
+Collin Weiner | President/CEO| collinw@calenergycorp.com| 925-922-2606
+          </p>
+        </apex:outputPanel>
+        </div>
+
+
+
+        <div style="page-break-after: always"/>
+
+
+
+        <div class="second-page">
+          <img class="company-logo-2" 
+                             src="https://computing-power-5305--partial.sandbox.file.force.com/sfc/dist/version/download/?oid=00DD30000008r1o&ids=068D3000006FhXh&d=%2Fa%2FD30000005ONH%2FeFy8AFZWEhv5z26z9sJcPKJj3UHJCLFiV_rSyV3FMz0&asPdf=false" 
+                             alt="CalEnergy Corporation" />
+          <table style="border: none;border-collapse: collapse;width: 100%;">
+            <thead>
+              <tr>
+                <th width="50%"></th>
+                <th width="50%"></th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                    <td style="border: 1px dashed #BBBBBB">CalEnergy Corporation</td>
+                    <td style="text-align: right;border: 1px dashed #BBBBBB"><span style="">To : <apex:outputField value="{!quote.Contact.Name}"/></span></td>
+                </tr>
+                <tr>
+                    <td style="border: 1px dashed #BBBBBB">P: (415)710-9232</td>
+                    <td style="text-align: right;border: 1px dashed #BBBBBB">   <span style=""></span><span style=""></span><span style=""><apex:outputField value="{!quote.Email}"/></span></td>
+                </tr>
+                <tr>
+                    <td style="border: 1px dashed #BBBBBB">E: jhubner@CalEnergyCorp.com</td>
+                    <td style="text-align: right;border: 1px dashed #BBBBBB"><span style=""> <span style=""></span></span><span style=""><apex:outputField value="{!quote.Account.Name}"/></span></td>
+                </tr>
+                <tr>
+                    <td style="border: 1px dashed #BBBBBB"></td>
+                    <td style="text-align: right;border: 1px dashed #BBBBBB">   <span style=""></span><span style=""></span><span style=""><apex:outputField value="{!quote.BillingStreet}"/></span></td>
+                </tr>
+                <tr>
+                    <td style="border: 1px dashed #BBBBBB"></td>
+                    <td style="text-align: right;border: 1px dashed #BBBBBB"><span style=""> <span style=""> </span></span><span style=""><apex:outputField value="{!quote.BillingCity}"/>, <apex:outputField value="{!quote.BillingState}"/>, <apex:outputField value="{!quote.BillingPostalCode}"/></span></td>
+                </tr>
+                <tr>
+                    <td style="border: 1px dashed #BBBBBB"><br/></td>
+                    <td style="text-align: right;border: 1px dashed #BBBBBB">          <span style=""><apex:outputField value="{!quote.Phone}"/><br/></span></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p><span style="color: #222222;"><br/><br/></span></p>
+        <table style="color: #0e4ded; background-color: #0e4ded;  border: solid #ABABAB;border-collapse: collapse;width:100%">
+            <tbody>
+                <tr style="color: #40B4E5;background-color: #40B4E5;border: none;">
+                    <td style="text-align: center;border: 1px solid #ADB7B7"><span style="color: #FFFFFF;">Representitive</span></td>
+                    <td style="text-align: center;border: 1px solid #ADB7B7"><span style="color: #FFFFFF;">Job</span></td>
+                    <td style="text-align: center;border: 1px solid #ADB7B7"><span style="color: #FFFFFF;">Payment Terms</span></td>
+                    <td style="text-align: center;border: 1px solid #ADB7B7"><span style="color: #FFFFFF;"><span style="">Due Date</span><br/></span></td>
+                </tr>
+                <tr style="color: #FFFFFF;background-color: #FFFFFF;border: none;">
+                    <td style="text-align: center;border: 1px solid #ADB7B7"><span style="color: #FFFFFF;"><span style=""><span style="color: #000000;"><span style=""><br/><apex:outputField value="{!quote.Opportunity.Owner.Name}"/></span><br/></span></span><br/></span></td>
+                    <td style="text-align: center;border: 1px solid #ADB7B7"><span style="color: #000000;"><span style=""><apex:outputField value="{!quote.Opportunity.Service_Locstion_Address__Street__s}"/><br/><apex:outputField value="{!quote.Opportunity.Service_Locstion_Address__City__s}"/>, <apex:outputField value="{!quote.Opportunity.Service_Locstion_Address__StateCode__s}"/> - <apex:outputField value="{!quote.Opportunity.Service_Locstion_Address__PostalCode__s}"/></span></span></td>
+                    <td style="text-align: center;border: 1px solid #ADB7B7"><span style="color: #000000;"><span style="">100%</span><br/></span></td>
+                    <td style="text-align: center;border: 1px solid #ADB7B7"><span style="color: #000000;">Upon Completion<br/></span></td>
+                </tr>
+            </tbody>
+        </table>
+        
+<br/>
+
+
+        
+<table style="color: #0e4ded; background-color: #0e4ded;  border: 1px solid #ABABAB;border-collapse: collapse;width:100%">
+    <tbody>
+        <tr style="color: #40B4E5;background-color: #40B4E5;border: none;">
+            <td style="text-align: center;border: 1px solid #ADB7B7"><span style="color: #FFFFFF;">Service</span></td>
+            <td style="text-align: center;border: 1px solid #ADB7B7"><span style="color: #FFFFFF;">Location</span></td>
+            <td style="text-align: center;border: 1px solid #ADB7B7"><span style="color: #FFFFFF;">Zone / Duration</span></td>
+            <td style="text-align: center;border: 1px solid #ADB7B7"><span style="color: #FFFFFF;">Project Total</span></td>
+        </tr>
+        <tr style="color: #FFFFFF;background-color: #FFFFFF;border: none;">
+            <td style="text-align: center;border: 1px solid #ADB7B7"><span style="color: #000000;"><strong style="color: #222222;background-color: #FFFFFF;"><span style="color: #000000;background-color: #FFFFFF;"><span style="color: #FFFFFF;background-color: #FFFFFF;"><span style="font-family: Verdana, sans-serif;"></span></span></span></strong><br/></span></td>
+            <td style="text-align: center;border: 1px solid #ADB7B7"><span style="color: #000000;"><span style="color: #000000;"><apex:outputField value="{!quote.Opportunity.Service_Locstion_Address__City__s}"/>,<apex:outputField value="{!quote.Opportunity.Service_Locstion_Address__StateCode__s}"/></span><br/></span></td>
+            <td style="text-align: center;border: 1px solid #ADB7B7"><span style="color: #000000;"><span style=""><br/></span><br/></span></td>
+            <td style="text-align: center;border: 1px solid #ADB7B7"><span style="color: #000000;"></span></td>
+        </tr>
+        <tr style="color: #FFFFFF;background-color: #FFFFFF;border: none;">
+            <td colspan="4" style="text-align: left;border: 1px solid #ADB7B7"><span style="color: #000000;"><br/></span><span style="color: #000000;"></span><span style=""><span style="color: #000000;">Estimate:RateTable</span></span><br/><span style="color: #000000;"></span><br/><span style="color: #000000;"></span></td>
+        </tr>
+        <tr style="border: none;">
+            <td style="text-align: left;color: #FFFFFF;background-color: #FFFFFF;border: 1px solid #ADB7B7"><span style=""><span style="color: #000000;">Notes:</span></span></td>
+            <td style="text-align: left;color: #FFFFFF;background-color: #FFFFFF;border: 1px solid #ADB7B7"><span style="color: #000000;"><span style=""><apex:outputField value="{!quote.Description}"/></span><br/></span></td>
+            <td style="text-align: right;color: #FFFFFF;background-color: #FFFFFF;border: 1px solid #ADB7B7"><span style=""><strong><span style="color: #000000;">Total</span></strong></span></td>
+            <td style="text-align: center;color: #FFFFFF;background-color: #FFFFFF;border: 1px solid #ADB7B7"><span style="color: #000000;"><strong><apex:outputField value="{!quote.TotalPrice}"/></strong><br/></span></td>
+        </tr>
+    </tbody>
+</table>
+
+
+
+
+<p><span style="color: #222222;">  Proposal prepared by:</span><span style="color: #222222;"><apex:outputField value="{!quote.Opportunity.Owner.Name}"/></span><span style="color: #222222;"><span style=""><span style=""><br/><br/></span></span></span></p>
+
+<div style="color: #222222;">
+    <table   style="border: 1px dashed #BBBBBB; border-collapse: collapse; width: 100%;">
+        <tbody>
+            <tr>
+                <td  style="text-align: left;border: 1px dashed #BBBBBB">
+                    <p><span style="">This is a proposal on the services named, subject to the conditions noted below: This proposal is a lump-sum job cost binding said provider to perform aforementioned services upon receiving 100% upon completion. If compliance standards are not met and additional consultation and/or site visits are required, those services will be charged separately. Proposal not applicable to prevailing wage / certified payroll projects. If these items are required a new proposal will need to be provided to reflect those changes. Contracted person(s) may terminate this contract at any time but will be subject to pay the contract price plus a fee of 20% and any payments outstanding for additional services rendered. Late payments to accrue at 5% per month. To accept this proposal, sign here and return:</span></p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<p><span style="color: #222222;"><br/><br/><br/><br/><br/><br/><span style=""><br/> <apex:outputField value="{!quote.Contact.Name}"/>: ____________________________       Date: ________________________<br/></span><br/>  <br/></span></p>
+
+
+
+        
+        </div>
+
+        
+        
+      </body>
+    </html>
+</apex:page>

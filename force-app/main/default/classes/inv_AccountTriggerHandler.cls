@@ -14,8 +14,8 @@ public class inv_AccountTriggerHandler {
             
             for(Account acc : listNew){
 
-                if(isInsert && (acc.Quickbook_Customer_ID_c__c == '' || acc.Quickbook_Customer_ID_c__c == null)){
-                    createCustomerCallout.createCustomer(acc.Id, ceSettings.QB_Company_Id_c__c);
+                if((isInsert || isUpdate ) && (acc.Quickbook_Customer_ID_c__c == '' || acc.Quickbook_Customer_ID_c__c == null)){
+                    // createCustomerCallout.createCustomer(acc.Id, ceSettings.QB_Company_Id_c__c);
                 }
             }
         }

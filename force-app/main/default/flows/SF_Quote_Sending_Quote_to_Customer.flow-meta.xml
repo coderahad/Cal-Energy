@@ -1,24 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <actionCalls>
-        <name>Send_Email_to_Customer</name>
-        <label>Send Email to Customer</label>
+        <name>Send_Email</name>
+        <label>Send Email</label>
         <locationX>176</locationX>
-        <locationY>566</locationY>
-        <actionName>Quote.Quote_Review_Mail</actionName>
-        <actionType>emailAlert</actionType>
-        <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Error_Screen</targetReference>
-        </faultConnector>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <locationY>782</locationY>
+        <actionName>QuotePdfEmailSender</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
-            <name>SObjectRowId</name>
+            <name>ContactId</name>
             <value>
-                <elementReference>recordId</elementReference>
+                <elementReference>Get_Quote.ContactId</elementReference>
             </value>
         </inputParameters>
-        <nameSegment>Quote.Quote_Review_Mail</nameSegment>
+        <inputParameters>
+            <name>CreatePublicLink</name>
+        </inputParameters>
+        <inputParameters>
+            <name>EmailTemplateId</name>
+            <value>
+                <elementReference>getEmailtemplate.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>QuoteId</name>
+            <value>
+                <elementReference>Get_Quote.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>QuotePdfEmailSender</nameSegment>
         <offset>0</offset>
     </actionCalls>
     <apiVersion>63.0</apiVersion>
@@ -55,7 +66,7 @@
     </dynamicChoiceSets>
     <environments>Default</environments>
     <interviewLabel>SF - Quote - Sending Quote to Customer {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>SF - Quote - Sending Quote to Customer</label>
+    <label>SF - Quote - Sending Quote to Customer_Review_1_VG</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -96,13 +107,34 @@
         <object>Quote</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>getEmailtemplate</name>
+        <label>getEmailtemplate</label>
+        <locationX>176</locationX>
+        <locationY>566</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Review_And_Send</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Quote Email Template</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>EmailTemplate</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordUpdates>
         <name>Update_Quote_Template</name>
         <label>Update Quote Template</label>
         <locationX>176</locationX>
         <locationY>458</locationY>
         <connector>
-            <targetReference>Send_Email_to_Customer</targetReference>
+            <targetReference>getEmailtemplate</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Error_Screen</targetReference>
@@ -113,7 +145,7 @@
     <screens>
         <name>Error_Screen</name>
         <label>Error Screen</label>
-        <locationX>704</locationX>
+        <locationX>440</locationX>
         <locationY>566</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -133,6 +165,43 @@
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Review_And_Send</name>
+        <label>Review And Send</label>
+        <locationX>176</locationX>
+        <locationY>674</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Send_Email</targetReference>
+        </connector>
+        <fields>
+            <name>Review_Quote</name>
+            <extensionName>c:vfInFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>pageName</name>
+                <value>
+                    <elementReference>Review_Quote.pageName</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <nextOrFinishButtonLabel>Send</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
     </screens>
     <screens>
         <name>Send_Quote_To_Customer</name>
@@ -165,7 +234,7 @@
                 </width>
             </styleProperties>
         </fields>
-        <nextOrFinishButtonLabel>Send Email</nextOrFinishButtonLabel>
+        <nextOrFinishButtonLabel>Review</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>

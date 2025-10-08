@@ -15,6 +15,16 @@ export default class InoviQuoteDetail extends LightningElement {
 
     isTemplate1 = false;
     isTemplate2 = false;
+    isCLCATT = false;
+    progOnly = false;
+    t24pw = false;
+    t24teasing = false;
+    ptds = false;
+    pocalcatt = false;
+    t24Con = false;
+    cdcal = false;
+
+    templateType = ''
 
     columns = [
         { label: 'Product', fieldName: 'ProductName', type: 'text' },
@@ -22,6 +32,19 @@ export default class InoviQuoteDetail extends LightningElement {
         { label: 'Unit Price', fieldName: 'UnitPrice', type: 'currency' },
         { label: 'Total Price', fieldName: 'TotalPrice', type: 'currency' }
     ];
+
+    async handleDownload() {
+        try {
+        const url = this.quote.Quote_Link__c;
+        if (url) {
+            window.open(url, '_blank'); // direct download/preview
+        }
+        } catch (e) {
+        // handle error UI
+        // eslint-disable-next-line no-console
+        console.error(e);
+        }
+    }
 
     connectedCallback() {
         console.log('recordId:'+ this.recordId);
@@ -45,8 +68,17 @@ export default class InoviQuoteDetail extends LightningElement {
         .then(result => {
             this.quote = result.quote;
 
-            this.isTemplate1 = this.quote.Quote_Template__c == 'Quote Template 1';
-            this.isTemplate2 = this.quote.Quote_Template__c == 'Quote Template 2';
+            this.isTemplate1 = this.quote.Quote_Template__c;
+            this.isCLCATT = this.quote.Quote_Template__c == 'CLCATT T24 Only';
+            this.progOnly = this.quote.Quote_Template__c == 'Programming Only';
+            this.t24pw = this.quote.Quote_Template__c == 'T24 (Prevailing Wage)';
+            this.t24teasing = this.quote.Quote_Template__c == 'T24 Testing (After Hours)';
+            this.ptds = this.quote.Quote_Template__c == 'Program/Test/Devices Sale';
+            this.pocalcatt = this.quote.Quote_Template__c == 'Programming/CLCATT';
+            this.t24Con = this.quote.Quote_Template__c == 'T24 Consultation';
+            this.cdcal = this.quote.Quote_Template__c == 'Controls Design / CLCATT';
+
+
 
             this.quoteStatus = this.quote.Status;
             this.poNumber = this.quote.PO_Number__c || '';
@@ -55,6 +87,7 @@ export default class InoviQuoteDetail extends LightningElement {
                 ...item,
                 ProductName: item.Product2?.Name || 'N/A'
             }));
+
 
             this.selectedRows = result.quoteLines
             .filter(item => item.Selected__c === true)

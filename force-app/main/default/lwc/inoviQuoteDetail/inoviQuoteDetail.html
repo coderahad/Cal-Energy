@@ -16,9 +16,9 @@
                                 <template lwc:if={isTemplate1}>
                                     PO Number: <strong>{poNumber}</strong>
                                 </template>
-                                <template lwc:if={isTemplate2}>
+                                <!-- <template lwc:if={isTemplate2}>
                                     Work Order Number: <strong>{poNumber}</strong>
-                                </template>
+                                </template> -->
                             </div>
                         </template>
                     </div>
@@ -83,8 +83,12 @@
                             <div class="meta-item">
                                 <span class="meta-label">Date:</span>
                                 <span class="meta-value">
-                                    <template lwc:if={isTemplate1}>01/09/2025</template>
-                                    <template lwc:if={isTemplate2}>02/14/2025</template>
+                                    <lightning-formatted-date-time 
+                                        value={quote.CreatedDate}
+                                        year="numeric"
+                                        month="long"
+                                        day="2-digit">
+                                    </lightning-formatted-date-time>
                                 </span>
                             </div>
                         </div>
@@ -104,12 +108,11 @@
                             </h3>
                             <div class="info-content">
                                 <div class="client-name">
-                                    <template lwc:if={isTemplate1}>{quote.Contact.FirstName}</template>
-                                    <template lwc:if={isTemplate2}>Armando Uribe</template>
+                                    <template lwc:if={isTemplate1}>{quote.Contact.Name}</template>
                                 </div>
                                 <div class="company-name">
                                     <template lwc:if={isTemplate1}>{quote.Account.Name}</template>
-                                    <template lwc:if={isTemplate2}>PLP SoCal</template>
+
                                 </div>
                                 <div class="contact-details">
                                     <template lwc:if={isTemplate1}>
@@ -124,20 +127,6 @@
                                         <div class="contact-item">
                                             <lightning-icon icon-name="utility:phone_portrait" size="x-small"></lightning-icon>
                                             {quote.Phone}
-                                        </div>
-                                    </template>
-                                    <template lwc:if={isTemplate2}>
-                                        <div class="contact-item">
-                                            <lightning-icon icon-name="utility:email" size="x-small"></lightning-icon>
-                                            auribe@plpsocal.com
-                                        </div>
-                                        <div class="contact-item">
-                                            <lightning-icon icon-name="utility:location" size="x-small"></lightning-icon>
-                                            1737 East 22nd Street, Los Angeles, CA. 90058
-                                        </div>
-                                        <div class="contact-item">
-                                            <lightning-icon icon-name="utility:phone_portrait" size="x-small"></lightning-icon>
-                                            (323) 620-8797
                                         </div>
                                     </template>
                                 </div>
@@ -155,7 +144,6 @@
                                     <span class="item-label">Project:</span>
                                     <span class="item-value">
                                         <template lwc:if={isTemplate1}>{quote.Opportunity.Name}</template>
-                                        <template lwc:if={isTemplate2}>Congregate Care Facility Elderly</template>
                                     </span>
                                 </div>
                                 <div class="project-item">
@@ -166,14 +154,12 @@
                                     <span class="item-label">Representative:</span>
                                     <span class="item-value">
                                         <template lwc:if={isTemplate1}>{quote.Opportunity.Owner.Name}</template>
-                                        <template lwc:if={isTemplate2}>Collin Weiner</template>
                                     </span>
                                 </div>
                                 <div class="project-item">
                                     <span class="item-label">Location:</span>
                                     <span class="item-value">
-                                        <template lwc:if={isTemplate1}>San Francisco, California</template>
-                                        <template lwc:if={isTemplate2}>Irvine, California</template>
+                                        <template lwc:if={isTemplate1}>{quote.Opportunity.Service_Locstion_Address__City__s}, {quote.Opportunity.Service_Locstion_Address__StateCode__s}</template>
                                     </span>
                                 </div>
                             </div>
@@ -195,9 +181,7 @@
                         <template lwc:if={isTemplate1}>
                             <p>{quote.Description}</p>
                         </template>
-                        <template lwc:if={isTemplate2}>
-                            <p>We are pleased to provide our proposal to perform Lighting Controls Title 24 acceptance testing and certification at Chase Center - WNBA Golden State Valkyries Locker Room. Documentation and compliance verification forms per CEC regulations shall be completed and sent to your attention within five business days of testing. If required sooner, please let us know and we will provide a re-quote for expedited service.</p>
-                        </template>
+                        
                     </div>
                 </div>
             </div>
@@ -235,26 +219,7 @@
                         </div>
                     </template>
 
-                    <!-- Static Quote Lines (Template 2) -->
-                    <template lwc:if={isTemplate2}>
-                        <div class="pricing-table">
-                            <div class="table-header">
-                                <div class="col-description">Description</div>
-                                <div class="col-qty">Qty</div>
-                                <div class="col-rate">Rate</div>
-                                <div class="col-total">Total</div>
-                            </div>
-                            <div class="table-row">
-                                <div class="col-description">
-                                    <div class="service-name">Lighting Controls Title 24 Acceptance Testing</div>
-                                    <div class="service-desc">Compliance Form / Plan Review - Construction Inspection - Function Testing / Verification - Provide / Submit Acceptance Certificates. Includes: Applicable NRCI & NRCA Forms (Project Specific)</div>
-                                </div>
-                                <div class="col-qty">5.00</div>
-                                <div class="col-rate">$1,600.00</div>
-                                <div class="col-total">$8,000.00</div>
-                            </div>
-                        </div>
-                    </template>
+                   
 
                     <!-- Total Section -->
                     <div class="pricing-summary">
@@ -262,7 +227,6 @@
                             <div class="summary-label">Total Amount</div>
                             <div class="summary-value">
                                 <template lwc:if={isTemplate1}>${quote.TotalPrice}</template>
-                                <template lwc:if={isTemplate2}>$8,000.00</template>
                             </div>
                         </div>
                     </div>
@@ -274,35 +238,253 @@
                 <div class="card-header">
                     <h3 class="card-title">
                         <lightning-icon icon-name="utility:contract" size="small" class="title-icon"></lightning-icon>
-                        Terms & Conditions
+                        QUALIFICATIONS
                     </h3>
                 </div>
                 <div class="card-body">
-                    <div class="terms-list">
-                        <div class="term-item">
-                            <div class="term-number">1</div>
-                            <div class="term-text">Overtime labor is excluded. We assume all work can be performed during normal business hours, between 7am and 4pm Monday through Friday.</div>
+                    <template lwc:if={isCLCATT}>
+                        <div class="terms-list">
+                            <div class="term-item">
+                                <div class="term-number">1</div>
+                                <div class="term-text">Overtime labor is excluded. We assume all work can be performed during normal business hours, between 7am and 4pm Monday through Friday.</div>
+                            </div>
+                            <div class="term-item">
+                                <div class="term-number">2</div>
+                                <div class="term-text">We exclude any modifications, improvements, repairs, adjustments, or alterations of any kind to existing building or new lighting/control systems.</div>
+                            </div>
+                            <div class="term-item">
+                                <div class="term-number">3</div>
+                                <div class="term-text">We assume we will have free access to all areas and equipment during our scheduled on-site work and any equipment necessary to access said spaces where equipment is installed.</div>
+                            </div>
+                            <div class="term-item">
+                                <div class="term-number">4</div>
+                                <div class="term-text">All lighting and lighting controls must be installed, energized and functional upon arrival.</div>
+                            </div>
+                            <div class="term-item">
+                                <div class="term-number">5</div>
+                                <div class="term-text">Cancellations for service must be requested via email no later than 48 hours prior to the start of service. Failure to notify CalEnergy will result in a $900 cancellation fee.</div>
+                            </div>
                         </div>
-                        <div class="term-item">
-                            <div class="term-number">2</div>
-                            <div class="term-text">We exclude any modifications, improvements, repairs, adjustments, or alterations of any kind to existing building or new lighting/control systems.</div>
+                    </template>
+
+                    <template lwc:if={progOnly}>
+                        <div class="terms-list">
+                            <div class="term-item">
+                                <div class="term-number">1</div>
+                                <div class="term-text">Overtime labor is excluded. We assume all work can be performed during normal business hours, between 7am and 4pm Monday through Friday.</div>
+                            </div>
+                            <div class="term-item">
+                                <div class="term-number">2</div>
+                                <div class="term-text">We exclude any modifications, improvements, repairs, adjustments, or alterations of any kind to existing building or new lighting/control systems.</div>
+                            </div>
+                            <div class="term-item">
+                                <div class="term-number">3</div>
+                                <div class="term-text">We assume we will have free access to all areas and equipment during our scheduled on-site work and any equipment necessary to access said spaces where equipment is installed.</div>
+                            </div>
+                            <div class="term-item">
+                                <div class="term-number">4</div>
+                                <div class="term-text">All lighting and lighting controls must be installed, energized and functional upon arrival.</div>
+                            </div>
+                            <div class="term-item">
+                                <div class="term-number">5</div>
+                                <div class="term-text">CalEnergy takes no responsibility for system design functionality or firmware issues deemed manufacturer related.</div>
+                            </div>
+                            <div class="term-item">
+                                <div class="term-number">6</div>
+                                <div class="term-text">Cancellations for service must be requested via email no later than 48 hours prior to the start of service. Failure to notify CalEnergy will result in a $900 cancellation fee.</div>
+                            </div>
                         </div>
-                        <div class="term-item">
-                            <div class="term-number">3</div>
-                            <div class="term-text">We assume we will have free access to all areas and equipment during our scheduled on-site work and any equipment necessary to access said spaces where equipment is installed.</div>
+                    </template>
+
+                    <template lwc:if={t24pw}>
+                        <div class="terms-list">
+                            <div class="term-item">
+                                <div class="term-number">1</div>
+                                <div class="term-text">Overtime labor is excluded. We assume all work can be performed during normal business hours, between 7am and 4pm Monday through Friday.</div>
+                            </div>
+                            <div class="term-item">
+                                <div class="term-number">2</div>
+                                <div class="term-text">We exclude any modifications, improvements, repairs, adjustments, or alterations of any kind to existing building or new lighting/control systems.</div>
+                            </div>
+                            <div class="term-item">
+                                <div class="term-number">3</div>
+                                <div class="term-text">We assume we will have free access to all areas and equipment during our scheduled on-site work and any equipment necessary to access said spaces where equipment is installed.</div>
+                            </div>
+                            <div class="term-item">
+                                <div class="term-number">4</div>
+                                <div class="term-text">All lighting and lighting controls must be installed, energized and functional upon arrival.</div>
+                            </div>
+                            <div class="term-item">
+                                <div class="term-number">5</div>
+                                <div class="term-text">Cancellations for service must be requested via email no later than 48 hours prior to the start of service. Failure to notify CalEnergy will result in a $900 cancellation fee.</div>
+                            </div>
                         </div>
-                        <div class="term-item">
-                            <div class="term-number">4</div>
-                            <div class="term-text">All lighting and lighting controls must be installed, energized and functional upon arrival.</div>
+                    </template>
+
+                    <template lwc:if={t24teasing}>
+                        <div class="terms-list">
+                            <div class="term-item">
+                                <div class="term-number">1</div>
+                                <div class="term-text">Overtime labor is excluded. We assume all work can be performed during normal business hours, between 7am and 4pm Monday through Friday.</div>
+                            </div>
+                            <div class="term-item">
+                                <div class="term-number">2</div>
+                                <div class="term-text">We exclude any modifications, improvements, repairs, adjustments, or alterations of any kind to existing building or new lighting/control systems.</div>
+                            </div>
+                            <div class="term-item">
+                                <div class="term-number">3</div>
+                                <div class="term-text">We assume we will have free access to all areas and equipment during our scheduled on-site work and any equipment necessary to access said spaces where equipment is installed.</div>
+                            </div>
+                            <div class="term-item">
+                                <div class="term-number">4</div>
+                                <div class="term-text">All lighting and lighting controls must be installed, energized and functional upon arrival.</div>
+                            </div>
+                            <div class="term-item">
+                                <div class="term-number">5</div>
+                                <div class="term-text">Cancellations for service must be requested via email no later than 48 hours prior to the start of service. Failure to notify CalEnergy will result in a $900 cancellation fee.</div>
+                            </div>
                         </div>
-                        <div class="term-item">
-                            <div class="term-number">5</div>
-                            <div class="term-text">Cancellations for service must be requested via email no later than 48 hours prior to the start of service. Failure to notify CalEnergy will result in a $900 cancellation fee.</div>
+                    </template>
+
+                    <template lwc:if={ptds}>
+                        <div class="terms-list">
+                            <div class="term-item">
+                                <div class="term-number">1</div>
+                                <div class="term-text">Overtime labor is excluded. We assume all work can be performed during normal business hours, between 7am and 4pm Monday through Friday.</div>
+                            </div>
+                            <div class="term-item">
+                                <div class="term-number">2</div>
+                                <div class="term-text">We exclude any modifications, improvements, repairs, adjustments, or alterations of any kind to existing building or new lighting/control systems.</div>
+                            </div>
+                            <div class="term-item">
+                                <div class="term-number">3</div>
+                                <div class="term-text">We assume we will have free access to all areas and equipment during our scheduled on-site work and any equipment necessary to access said spaces where equipment is installed.</div>
+                            </div>
+                            <div class="term-item">
+                                <div class="term-number">4</div>
+                                <div class="term-text">All lighting and lighting controls must be installed, energized and functional upon arrival.</div>
+                            </div>
+                            <div class="term-item">
+                                <div class="term-number">5</div>
+                                <div class="term-text">CalEnergy takes no responsibility for system design functionality or firmware issues deemed manufacturer related.</div>
+                            </div>
+                            <div class="term-item">
+                                <div class="term-number">6</div>
+                                <div class="term-text">Cancellations for service must be requested via email no later than 48 hours prior to the start of service. Failure to notify CalEnergy will result in a $900 cancellation fee.</div>
+                            </div>
                         </div>
-                    </div>
+                    </template>
+
+                    <template lwc:if={pocalcatt}>
+                        <div class="terms-list">
+                            <div class="term-item">
+                                <div class="term-number">1</div>
+                                <div class="term-text">Overtime labor is excluded. We assume all work can be performed during normal business hours, between 7am and 4pm Monday through Friday.</div>
+                            </div>
+                            <div class="term-item">
+                                <div class="term-number">2</div>
+                                <div class="term-text">We exclude any modifications, improvements, repairs, adjustments, or alterations of any kind to existing building or new lighting/control systems.</div>
+                            </div>
+                            <div class="term-item">
+                                <div class="term-number">3</div>
+                                <div class="term-text">We assume we will have free access to all areas and equipment during our scheduled on-site work and any equipment necessary to access said spaces where equipment is installed.</div>
+                            </div>
+                            <div class="term-item">
+                                <div class="term-number">4</div>
+                                <div class="term-text">All lighting and lighting controls must be installed, energized and functional upon arrival.</div>
+                            </div>
+                            
+                            <div class="term-item">
+                                <div class="term-number">5</div>
+                                <div class="term-text">Cancellations for service must be requested via email no later than 48 hours prior to the start of service. Failure to notify CalEnergy will result in a $900 cancellation fee.</div>
+                            </div>
+
+                            <div class="term-item">
+                                <div class="term-number">6</div>
+                                <div class="term-text">CalEnergy takes no responsibility for system design functionality or firmware issues deemed manufacturer related.</div>
+                            </div>
+                        </div>
+                    </template>
+
+
+                    <template lwc:if={t24Con}>
+                        <div class="terms-list">
+                            <div class="term-item">
+                                <div class="term-number">1</div>
+                                <div class="term-text">Title 24 Consultations are billed in four hour blocks. Approved number of hour blocks are included on proposal. </div>
+                            </div>
+                            <div class="term-item">
+                                <div class="term-number">2</div>
+                                <div class="term-text">Any work done outside the approved four hour block schedule must be approved by client.</div>
+                            </div>
+                            <div class="term-item">
+                                <div class="term-number">3</div>
+                                <div class="term-text">Any remaining time blocks not used, will not be charged at time of invoice.</div>
+                            </div>
+                            <div class="term-item">
+                                <div class="term-number">4</div>
+                                <div class="term-text">It is the clients responsability to provide CalEnergy with the most current and accurate controls drawings.</div>
+                            </div>
+                        </div>
+                    </template>
+
+                    <template lwc:if={cdcal}>
+                        <div class="terms-list">
+                            <div class="term-item">
+                                <div class="term-number">1</div>
+                                <div class="term-text">Title 24 Consultations are billed in four hour blocks. Approved number of hour blocks are included on proposal. </div>
+                            </div>
+                            <div class="term-item">
+                                <div class="term-number">2</div>
+                                <div class="term-text">Any work done outside the approved four hour block schedule must be approved by client.</div>
+                            </div>
+                            <div class="term-item">
+                                <div class="term-number">3</div>
+                                <div class="term-text">Any remaining time blocks not used, will not be charged at time of invoice.</div>
+                            </div>
+                            <div class="term-item">
+                                <div class="term-number">4</div>
+                                <div class="term-text">It is the clients responsability to provide CalEnergy with the most current and accurate controls drawings.</div>
+                            </div>
+                            <div class="term-item">
+                                <div class="term-number">5</div>
+                                <div class="term-text">Overtime labor is excluded. We assume all work can be performed during normal business hours, between 7am and 4pm Monday through Friday.</div>
+                            </div>
+                            <div class="term-item">
+                                <div class="term-number">6</div>
+                                <div class="term-text">We exclude any modifications, improvements, repairs, adjustments, or alterations of any kind to existing building or new lighting/control systems.</div>
+                            </div>
+                            <div class="term-item">
+                                <div class="term-number">7</div>
+                                <div class="term-text">We assume we will have free access to all areas and equipment during our scheduled on-site work and any equipment necessary to access said spaces where equipment is installed.</div>
+                            </div>
+                            <div class="term-item">
+                                <div class="term-number">8</div>
+                                <div class="term-text">All lighting and lighting controls must be installed, energized and functional upon arrival.</div>
+                            </div>
+                            <div class="term-item">
+                                <div class="term-number">9</div>
+                                <div class="term-text">Title 24 acceptance testing and certification documentation and compliance verification forms per CEC regulations shall be completed and sent to your attention within five business days of testing. If required sooner, please let us know and we will provide a re-quote for expedited service.  </div>
+                            </div>
+                            <div class="term-item">
+                                <div class="term-number">10</div>
+                                <div class="term-text">Cancellations for service must be requested via email no later than 48 hours prior to the start of service. Failure to notify CalEnergy will result in a $900 cancellation fee.</div>
+                            </div>
+                        </div>
+                    </template>
+
+                    
                     
                     <div class="payment-terms">
-                        <p>We require purchase orders, or consulting agreements for all work, not sub-contracts. Payment terms are immediate upon receiving the invoice from CalEnergy Corporation's office.</p>
+                        <p>
+                            <template lwc:if={isCLCATT}>We require purchase orders, or consulting agreements for all work, not sub-contracts. Payment terms are immediate upon receiving the invoice from CalEnergy Corporation's office.<br></template>
+                            <template lwc:if={cdcal}>We require purchase orders, or consulting agreements for all work, not sub-contracts. Payment terms are immediate upon receiving the invoice from CalEnergy Corporation's office.<br></template>
+                            <template lwc:if={t24pw}>Payment terms are immediate upon receiving invoice from CalEnergy Corporations office.<br></template>
+                            <template lwc:if={ptds}>Payment terms are immediate upon receiving invoice from CalEnergy Corporations office.<br></template>
+                            <template lwc:if={pocalcatt}>Payment terms are immediate upon receiving invoice from CalEnergy Corporations office.<br></template>
+
+                           Thank you for this opportunity to be of service. Please contact me with any questions or concerns.
+                        </p>
                     </div>
                 </div>
             </div>
@@ -334,6 +516,9 @@
                         <div class="thank-you-message">
                             <p>Thank you for this opportunity to be of service. Please contact me with any questions or concerns.</p>
                         </div>
+                        
+                        <button class="download" onclick={handleDownload}>Download Quote</button>
+    
                     </div>
                 </div>
             </div>
@@ -376,7 +561,7 @@
                     <h2 id="modal-heading" class="slds-text-heading_medium modal-title">
                         <lightning-icon icon-name="utility:work_order" size="small" class="modal-icon"></lightning-icon>
                         <template lwc:if={isTemplate1}>Enter PO Information</template>
-                        <template lwc:if={isTemplate2}>Enter Work Order Information</template>
+                        <!-- <template lwc:if={isTemplate2}>Enter Work Order Information</template> -->
                     </h2>
                 </header>
                 <div class="slds-modal__content modal-content">

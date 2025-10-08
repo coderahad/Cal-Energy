@@ -14,7 +14,7 @@ public class inv_ProductTriggerHandler {
 
            
 
-                if(isInsert && (prod.QuickBook_Item_ID__c == '' || prod.QuickBook_Item_ID__c == null)){
+                if((isInsert || isUpdate) && (prod.QuickBook_Item_ID__c == '' || prod.QuickBook_Item_ID__c == null)){
                     createItemCallout.createItem(prod.Id, ceSettings.QB_Company_Id_c__c);
                 }
 

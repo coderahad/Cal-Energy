@@ -24,9 +24,9 @@
                     sforce.one.navigateToRelatedList('Opportunities', id);
                 }
                 console.log('vf event data window listener => ');
-            });
-            console.log('id:'+ id);
-            $Lightning.use("c:QuoteApp", function() {
+        });
+        console.log('id:'+ id);
+        $Lightning.use("c:QuoteApp", function() {
             $Lightning.createComponent("c:inoviQuoteDetail",
             {
                 recordId : id
@@ -36,6 +36,7 @@
                 console.log('Calling the LWC Component');
             });
         });
+
     </script>
 
     <!--<apex:form >

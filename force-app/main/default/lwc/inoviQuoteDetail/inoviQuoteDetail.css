@@ -165,6 +165,18 @@
     --slds-c-button-brand-color-border: var(--brand-green);
 }
 
+.download{
+   background: #7fb931;
+    color: #fff;
+    border: none;
+    padding: 14px;
+    border-radius: 10px;
+    font-size: 14px;
+    width: 200px;
+    margin: 0 auto;
+}
+
+
 .btn-decline {
     --slds-c-button-destructive-color-border: #e74c3c;
 }

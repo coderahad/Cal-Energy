@@ -2,6 +2,7 @@ public class createCustomerCallout {
 
     @future(callout=true)
     public static void createCustomer(String AccountId, String CompanyId){
+        inv_AccountTriggerHandler.disableTrigger = true;
         String body = '{"FullyQualifiedName":"King Groceries","PrimaryEmailAddr":{"Address":"jdrew@myemail.com"},"DisplayName":"King Groceries","BillAddr":{"CountrySubDivisionCode":"CA","City":"Mountain View","PostalCode":"94042","Line1":"123 Main Street","Country":"USA"}}';
 
         List<Account> accs = [SELECT Id, Name,Billing_Email__c,QB_Sync_Error_Details__c, QB_Sync_Status_Code__c,  BillingStreet, BillingCity, BillingPostalCode, BillingState, BillingCountry FROM Account WHERE Id = :AccountId];
